@@ -40,4 +40,12 @@ async def alterar_saldo(usuario,quantidade):
 
     usuarios.update_one(filtro,relacao)
 
+async def listar_usuarios():
+    try:
+        usuarios_lista = await usuarios.find().to_list(length=None)
+        return [{"discord_id": u["discord_id"], "moedas": u["moedas"]} for u in usuarios_lista]
+    except Exception as e:
+        logger.error(f"Erro ao listar usuários: {e}")
+        return []
+
 
