@@ -1,8 +1,13 @@
 import pymongo
 from dotenv import load_dotenv
 import os
+import logging
+
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 client = pymongo.MongoClient(os.getenv("MONGODB_TOKEN"))
 bancodedados = client["economia"]
