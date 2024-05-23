@@ -41,6 +41,16 @@ async def pagamento(interaction:discord.Interaction,usuario: discord.User,valor:
         await alterar_saldo(usuario,valor)
         await interaction.response.send_message(f"O valor foi enviado com sucesso")
     else: 
-        await interaction.response.send_message(f"Você não tem saldo")       
+        await interaction.response.send_message(f"Você não tem saldo") 
+@tree.command(name='listar_usuarios', description='Lista todos os usuários e seus saldos')
+async def listar_usuarios_cmd(interaction: discord.Interaction):
+    usuarios_lista = await listar_usuarios()
+    if usuarios_lista:
+        mensagem = "Lista de usuários e seus saldos:\n"
+        mensagem += "\n".join([f"{u['discord_id']}: {u['moedas']} moedas" for u in usuarios_lista])
+    else:
+        mensagem = "Não foi possível obter a lista de usuários."
+    await interaction.response.send_message(mensagem)
+
 
 aclient.run(os.getenv("BOT_TOKEN"))
